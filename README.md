@@ -1,1 +1,1 @@
-# Automatizar-la-actualizaci-n-del-cat-logo-de-una-empresa-
+# Automatizar-la-actualización-del-catálogo-de-una-empresa-
