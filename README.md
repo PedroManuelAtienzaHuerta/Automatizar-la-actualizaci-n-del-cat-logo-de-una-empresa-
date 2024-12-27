@@ -1,0 +1,2 @@
+# Automatizar-la-actualizaci-n-del-cat-logo-de-una-empresa-
+Desarrollar un sistema que actualice la información del catálogo de los proveedores de una empresa, como imágenes grandes con una descripción asociada de los productos. Es necesario convertir las imágenes y el texto de la descripción. El catálogo  se carga en un servicio web y se envía email con PDF a los proveedores de los productos recibidos.
