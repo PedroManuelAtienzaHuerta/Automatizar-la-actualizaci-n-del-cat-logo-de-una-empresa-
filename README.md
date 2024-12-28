@@ -23,25 +23,25 @@ Por último, paralelamente al funcionamiento de la automatización, queremos **c
 Los proveedores nos envían un archivo con un directorio llamado **"supplier-data"**, que contiene subdirectorios llamados **"images"** y **"descriptions".**
 
 Liste el contenido del directorio supplier-data utilizando el siguiente comando:
-
+```
 ls ~/supplier/data
-
+```
 
 Salida:
-
+```
 images descriptions
-
+```
 El subdirectorio **"images"** contiene imágenes de varias frutas, mientras que el subdirectorio **"descriptions"** tiene ficheros de texto que contienen la descripción de cada fruta. 
 
 Puede echar un vistazo a cualquiera de estos archivos de texto utilizando el comando cat:
-
+```
 cat ~/supplier-data/descriptions 
-
+```
 Salida:
-
+```
 Mango
 115 libs
-
+```
 
 # Trabajar con imágenes de proveedores:
 
@@ -62,14 +62,17 @@ Utilice el método **convert("RGB")** para convertir la imagen RGBA a RGB.
 Tras procesar las imágenes, se guardan en la misma ruta ~/supplier-data/images, pero con extensión.jpg
 
 Cree y abra el archivo con el **editor nano.**
-
+```
  nano ~/change_image.py
- 
+ ```
 El archivo sería el siguiente:
+```python
 
 #!/usr/bin/env python3
+
 from PIL import Image
 import os
+
 path = "./supplier-data/images"
 for f in os.listdir("./supplier-data/images"):
       if f.endswith(".tiff"):
@@ -77,7 +80,7 @@ for f in os.listdir("./supplier-data/images"):
            name = split_f[0] + ".jpeg"
            im = Image.open(path + f).convert("RGB")
            im.resize((600, 400)).save("./supplier-data/images/" + name, "JPEG")
-
+```
 
 
 
