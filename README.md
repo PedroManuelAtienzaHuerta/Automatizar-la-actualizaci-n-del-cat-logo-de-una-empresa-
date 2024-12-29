@@ -74,7 +74,7 @@ from PIL import Image
 import os
 
 path = "./supplier-data/images/"
-for f in os.listdir("./supplier-data/images/"):
+for f in os.listdir("./supplier-data/images"):
       if f.endswith(".tiff"):
            split_f = f.split(".")
            name = split_f[0] + ".jpeg"
@@ -114,7 +114,7 @@ import requests
 import os 
 # Este ejemplo muestra como un archivo puede ser cargado usando el módulo requests de Python 
 url = "http://localhost/upload/"
-for f in os.listdir("./supplier-data/images/"):
+for f in os.listdir("./supplier-data/images"):
        if f.endswith(".jpeg"):
             with open('./supplier-data/images/' + f, 'rb') as opened:
                     r = requests.post(url, files={'file': opened})
@@ -146,17 +146,17 @@ A continuación tendrás que **procesar los archivos .txt (llamados001.txt, 002.
 
 Ten en cuenta que todos **los archivos se escriben en el siguiente formato**, con cada dato en su propia línea:
 
-- nombre
+- Nombre
 
-- peso (en libras)
+- Peso (en libras)
 
-- descripción
+- Descripción
 
 El **Modelo de datos en la aplicación Django fruit** tiene los siguientes campos: 
-- name
-- weight
-- description
--  image_name.
+- Name
+- Weight
+- Description
+- Image_name.
 
 El campo **weight** está definido como un campo entero.
 
