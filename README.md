@@ -127,24 +127,19 @@ for file in os.listdir(path):
     fruit = {}
     try:
         with open(os.path.join(path, file)) as f:
-            for ln in f:
-                line = ln.strip()
-                if "lbs" in line:
-                    # Extrae el peso y lo convierte a entero 
-                    nline = line.split()
-                    try:
-                        wght = int(nline[0])
-                        fruit["weight"] = wght
-                    except ValueError:
-                        print(f"Error al convertir el peso en el archivo {file}")
-                        continue
-                else:
-                    # Asigna descripciones y nombres al diccionario de frutas
-                    try:
-                        fruit[keys[0]] = line
-                        keys.pop(0)
-                    except IndexError:
-                        fruit[keys[0]] = line
+            lines = f.readlines()
+            
+                
+                continue
+            
+            fruit["name"] = lines[0].strip()
+            try:
+                fruit["weight"] = int(lines[1].strip().split()[0])
+            except ValueError:
+                print(f"Error al convertir el peso en el archivo {file}")
+                continue
+            fruit["description"] = lines[2].strip()
+
             # Resetea la lista de claves
             keys = ["name", "weight", "description", "image_name"]
             split_f = file.split(".")
@@ -161,9 +156,13 @@ for file in os.listdir(path):
 
 # Carga cada fruta del diccionario al servidor 
 for fruit in fruits:
-    response = requests.post("http://<External_IP>/fruits/", json=fruit)
-    if not response.ok:
-        print(f"Fallado el envío de datos para {fruit['name']}")
+    try:
+        response = requests.post("http://<External_IP>/fruits/", json=fruit)
+        if not response.ok:
+            print(f"Fallado el envío de datos para {fruit['name']}")
+    except requests.exceptions.RequestException as e:
+        print(f"Error al enviar los datos para {fruit['name']}: {e}")
+
 ```
 
 
