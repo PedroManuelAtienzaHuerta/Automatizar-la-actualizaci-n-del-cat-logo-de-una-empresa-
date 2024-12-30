@@ -112,65 +112,14 @@ El script completo sería el siguiente:
 ```python
 
 #!/usr/bin/env python3
-import os
 import requests
+import os
+# Este ejemplo muestra como un archivo puede ser cargado usando el módulo requests de Python 
 
-# Lista que contiene un diccionario de frutas 
-fruits = []
-path = "./supplier-data/descriptions/"
-img_path = "./supplier-data/images/"
-
-# Cargar la lista de archivos de imágenes una vez
-img_files = os.listdir(img_path)
-
-# Itera a través del directorio descriptions
-for file in os.listdir(path):
-    fruit = {}
-    try:
-        with open(os.path.join(path, file)) as f:
-            lines = f.readlines()
-            
-            if len(lines) < 3:
-                print(f"El archivo {file} no tiene el formato esperado.")
-                continue
-
-            fruit["name"] = lines[0].strip()
-            try:
-                fruit["weight"] = int(lines[1].strip().split()[0])
-            except ValueError:
-                print(f"Error al convertir el peso en el archivo {file}")
-                continue
-            fruit["description"] = lines[2].strip()
-
-            # Resetea la lista de claves
-            split_f = file.split(".")
-            name = split_f[0] + ".jpeg"
-            
-            # Busca las imágenes correspondientes 
-            if name in img_files:
-                fruit["image_name"] = name
-            else:
-                print(f"Imagen {name} no encontrada para {file}")
-                continue
-            
-            # Añade el diccionario frutas a la lista 
-            fruits.append(fruit)
-    except IOError:
-        print(f"Error al abrir el archivo {file}")
-
-# URL del servidor
-server_url = "http://<External_IP>/fruits/"
-
-# Carga cada fruta del diccionario al servidor 
-for fruit in fruits:
-    try:
-        response = requests.post(server_url, json=fruit, headers={"Content-Type": "application/json"})
-        if not response.ok:
-            print(f"Fallado el envío de datos para {fruit['name']}: {response.status_code} {response.text}")
-    except requests.exceptions.RequestException as e:
-        print(f"Error al enviar los datos para {fruit['name']}: {e}")
-
-
+url = "http://localhost/upload/"
+for f in os.listdir("./supplier-data/images"):
+    if f.endswith(".jpeg"):
+        with open('./supplier-data/images/' + f, 'rb') as opened:
 
 ```
 
