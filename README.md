@@ -234,53 +234,67 @@ Cree run.py utilizando el **editor nano:**
 nano ~/run.py
 ```
 El archivo completo sería el siguiente:
-```python
 
+```python
 #!/usr/bin/env python3
 import os
 import requests
 
 # Lista que contiene un diccionario de frutas 
 fruits = []
-keys = ["name", "weight", "description", "image_name"]
 path = "./supplier-data/descriptions/"
 img_path = "./supplier-data/images/"
+
+# Cargar la lista de archivos de imágenes una vez
+img_files = os.listdir(img_path)
 
 # Itera a través del directorio descriptions
 for file in os.listdir(path):
     fruit = {}
-    with open(path + file) as f:
-        for ln in f:
-            line = ln.strip()
-            if "lbs" in line:
-                # Extrae el peso y lo convierte a entero 
-                nline = line.split()
-                wght = int(nline[0])
-                fruit["weight"] = wght
+    try:
+        with open(os.path.join(path, file)) as f:
+            lines = f.readlines()
+            
+            if len(lines) < 3:
+                print(f"El archivo {file} no tiene el formato esperado.")
+                continue
+
+            fruit["name"] = lines[0].strip()
+            try:
+                fruit["weight"] = int(lines[1].strip().split()[0])
+            except ValueError:
+                print(f"Error al convertir el peso en el archivo {file}")
+                continue
+            fruit["description"] = lines[2].strip()
+
+            # Resetea la lista de claves
+            split_f = file.split(".")
+            name = split_f[0] + ".jpeg"
+            
+            # Busca las imágenes correspondientes 
+            if name in img_files:
+                fruit["image_name"] = name
             else:
-                # Asigna descripciones y nombres al diccionario de frutas
-                try:
-                    fruit[keys[0]] = line
-                    keys.pop(0)
-                except IndexError:
-                    fruit[keys[0]] = line
-        # Resetea la lista de claves y prepara los image_name
-        keys = ["name", "weight", "description", "image_name"]
-        split_f = file.split(".")
-        name = split_f[0] + ".jpeg"
-        
-        # Busca las imágenes correspondientes 
-        if name in os.listdir(img_path):
-            fruit["image_name"] = name
-        
-        # Añade el diccionario frutas a la lista 
-        fruits.append(fruit)
+                print(f"Imagen {name} no encontrada para {file}")
+                continue
+            
+            # Añade el diccionario frutas a la lista 
+            fruits.append(fruit)
+    except IOError:
+        print(f"Error al abrir el archivo {file}")
+
+# URL del servidor
+server_url = "http://<External_IP>/fruits/"
 
 # Carga cada fruta del diccionario al servidor 
 for fruit in fruits:
-    response = requests.post("http://<External_IP>/fruits/", json=fruit)
-    if not response.ok:
-        print(f"Fallado el envío de datos para {fruit['name']}")
+    try:
+        response = requests.post(server_url, json=fruit, headers={"Content-Type": "application/json"})
+        if not response.ok:
+            print(f"Fallado el envío de datos para {fruit['name']}: {response.status_code} {response.text}")
+    except requests.exceptions.RequestException as e:
+        print(f"Error al enviar los datos para {fruit['name']}: {e}")
+
 ```
 
 
