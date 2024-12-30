@@ -110,6 +110,7 @@ nano ~/supplier_image_upload.py
 El script completo sería el siguiente:
 
 ```python
+
 #!/usr/bin/env python3
 import os
 import requests
@@ -148,20 +149,27 @@ for file in os.listdir(path):
             # Busca las imágenes correspondientes 
             if name in img_files:
                 fruit["image_name"] = name
+            else:
+                print(f"Imagen {name} no encontrada para {file}")
+                continue
             
             # Añade el diccionario frutas a la lista 
             fruits.append(fruit)
     except IOError:
         print(f"Error al abrir el archivo {file}")
 
+# URL del servidor
+server_url = "http://<External_IP>/fruits/"
+
 # Carga cada fruta del diccionario al servidor 
 for fruit in fruits:
     try:
-        response = requests.post("http://<External_IP>/fruits/", json=fruit)
+        response = requests.post(server_url, json=fruit, headers={"Content-Type": "application/json"})
         if not response.ok:
-            print(f"Fallado el envío de datos para {fruit['name']}")
+            print(f"Fallado el envío de datos para {fruit['name']}: {response.status_code} {response.text}")
     except requests.exceptions.RequestException as e:
         print(f"Error al enviar los datos para {fruit['name']}: {e}")
+
 
 
 ```
