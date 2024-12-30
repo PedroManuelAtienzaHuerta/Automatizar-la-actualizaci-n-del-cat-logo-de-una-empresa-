@@ -109,16 +109,63 @@ nano ~/supplier_image_upload.py
 
 El script completo sería el siguiente:
 ```python
-#!/usr/bin/env python3 
-import requests 
-import os 
-# Este ejemplo muestra como un archivo puede ser cargado usando el módulo requests de Python 
-url = "http://localhost/upload/"
-for f in os.listdir("./supplier-data/images"):
-       if f.endswith(".jpeg"):
-            with open('./supplier-data/images/' + f, 'rb') as opened:
-                    r = requests.post(url, files={'file': opened})
+#!/usr/bin/env python3
+import os
+import requests
+
+# Lista que contiene un diccionario de frutas 
+fruits = []
+keys = ["name", "weight", "description", "image_name"]
+path = "./supplier-data/descriptions/"
+img_path = "./supplier-data/images/"
+
+# Cargar la lista de archivos de imágenes una vez
+img_files = os.listdir(img_path)
+
+# Itera a través del directorio descriptions
+for file in os.listdir(path):
+    fruit = {}
+    try:
+        with open(os.path.join(path, file)) as f:
+            for ln in f:
+                line = ln.strip()
+                if "lbs" in line:
+                    # Extrae el peso y lo convierte a entero 
+                    nline = line.split()
+                    try:
+                        wght = int(nline[0])
+                        fruit["weight"] = wght
+                    except ValueError:
+                        print(f"Error al convertir el peso en el archivo {file}")
+                        continue
+                else:
+                    # Asigna descripciones y nombres al diccionario de frutas
+                    try:
+                        fruit[keys[0]] = line
+                        keys.pop(0)
+                    except IndexError:
+                        fruit[keys[0]] = line
+            # Resetea la lista de claves
+            keys = ["name", "weight", "description", "image_name"]
+            split_f = file.split(".")
+            name = split_f[0] + ".jpeg"
+            
+            # Busca las imágenes correspondientes 
+            if name in img_files:
+                fruit["image_name"] = name
+            
+            # Añade el diccionario frutas a la lista 
+            fruits.append(fruit)
+    except IOError:
+        print(f"Error al abrir el archivo {file}")
+
+# Carga cada fruta del diccionario al servidor 
+for fruit in fruits:
+    response = requests.post("http://<External_IP>/fruits/", json=fruit)
+    if not response.ok:
+        print(f"Fallado el envío de datos para {fruit['name']}")
 ```
+
 
 Una vez que haya terminado de editar el script, **guarde el archivo** pulsando Ctrl+o, tecla Intro y Ctrl+x.
 
