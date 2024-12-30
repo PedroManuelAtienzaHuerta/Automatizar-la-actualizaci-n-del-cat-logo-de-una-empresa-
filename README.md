@@ -63,7 +63,7 @@ Tras procesar las imágenes, se guardan en la misma ruta ~/supplier-data/images/
 
 Cree y abra el archivo con el **editor nano.**
 ```
- nano ~/change_image.py
+ nano ~/changeImage.py
  ```
 El archivo sería el siguiente:
 ```python
@@ -178,6 +178,8 @@ Cree run.py utilizando el **editor nano:**
 ```
 nano ~/run.py
 ```
+El archivo completo sería el siguiente:
+```python
 
 #!/usr/bin/env python3 
 import os 
@@ -201,7 +203,7 @@ with open(path + file) as f:
                   try:
                         fruits(keys[index]] = line
                         index += 1
-                   except:
+                  except:
                         fruits(keys[2]] = line
      index = 0
      split_f = file.split(".")
@@ -211,12 +213,28 @@ with open(path + file) as f:
                 fruits= ["image_name"] = name 
                 response = requests.post("http://<External_IP>/fruits/", json=fruits)
                 fruits.clear()
+```
+
+A continuación, **guarde el archivo** pulsando Ctrl+o, tecla Intro y Ctrl+x.
+
+Conceda **permisos de ejecución** al script run.py:
+```
+sudo chmod +x ~/run.py
+```
+
+Ahora, ejecute el script run.py:
+```
+./run.py
+```
 
 
+# Genera un informe en PDF y envíalo por correo electrónico
 
-Genera un informe en PDF y envíalo por correo electrónico
-Una vez subidos los archivos images y descriptions al servidor web de la frutería, tendrás que generar un archivo PDF para enviárselo al proveedor, indicando que los datos se han procesado correctamente. 
-Para generar informes PDF, puede utilizar la biblioteca ReportLab. El contenido del informe debería tener este aspecto:
+Una vez subidos los archivos images y descriptions al servidor web de la frutería, tendrás que **generar un archivo PDF para enviárselo al proveedor**, indicando que los datos se han procesado correctamente. 
+
+Para generar informes PDF, puede utilizar la biblioteca **ReportLab.**
+
+El contenido del informe debería tener este aspecto:
 
 Actualización procesada en <fecha de hoy>
 
