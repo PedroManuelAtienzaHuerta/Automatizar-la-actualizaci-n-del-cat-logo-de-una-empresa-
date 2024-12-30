@@ -108,6 +108,7 @@ nano ~/supplier_image_upload.py
 ```
 
 El script completo sería el siguiente:
+
 ```python
 #!/usr/bin/env python3
 import os
@@ -115,7 +116,6 @@ import requests
 
 # Lista que contiene un diccionario de frutas 
 fruits = []
-keys = ["name", "weight", "description", "image_name"]
 path = "./supplier-data/descriptions/"
 img_path = "./supplier-data/images/"
 
@@ -129,9 +129,10 @@ for file in os.listdir(path):
         with open(os.path.join(path, file)) as f:
             lines = f.readlines()
             
-                
+            if len(lines) < 3:
+                print(f"El archivo {file} no tiene el formato esperado.")
                 continue
-            
+
             fruit["name"] = lines[0].strip()
             try:
                 fruit["weight"] = int(lines[1].strip().split()[0])
@@ -141,7 +142,6 @@ for file in os.listdir(path):
             fruit["description"] = lines[2].strip()
 
             # Resetea la lista de claves
-            keys = ["name", "weight", "description", "image_name"]
             split_f = file.split(".")
             name = split_f[0] + ".jpeg"
             
@@ -162,6 +162,7 @@ for fruit in fruits:
             print(f"Fallado el envío de datos para {fruit['name']}")
     except requests.exceptions.RequestException as e:
         print(f"Error al enviar los datos para {fruit['name']}: {e}")
+
 
 ```
 
