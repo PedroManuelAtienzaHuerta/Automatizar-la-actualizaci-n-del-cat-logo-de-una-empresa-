@@ -179,6 +179,71 @@ Cree run.py utilizando el **editor nano:**
 nano ~/run.py
 ```
 
+#!/usr/bin/env python3 
+import os 
+import requests 
+
+fruits = {}
+keys = ["name", "weight", "descriptions", "image-name"]
+index = 0
+path = "./supplier-data/descriptions/"
+img_path = "./supplier-data/images/"
+for file in os.listdirs("./supplier-data/descriptions"):
+with open(path + file) as f:
+       for ln in f:
+             line = ln.strip()
+             if "lbs" in line:
+                  nline = line.split()
+                  wght = int(nline[0])
+                  fruits = {"weight"} = wght 
+                  index += 1
+             else:
+                  try:
+                        fruits(keys[index]] = line
+                        index += 1
+                   except:
+                        fruits(keys[2]] = line
+     index = 0
+     split_f = file.split(".")
+     name = split_f[0] + ".jpeg"
+     for fle in os.listdirs("./supplier-data/images"):
+            if fle = name:
+                fruits= ["image_name"] = name 
+                response = requests.post("http://<External_IP>/fruits/", json=fruits)
+                fruits.clear()
+
+
+
+Genera un informe en PDF y envíalo por correo electrónico
+Una vez subidos los archivos images y descriptions al servidor web de la frutería, tendrás que generar un archivo PDF para enviárselo al proveedor, indicando que los datos se han procesado correctamente. 
+Para generar informes PDF, puede utilizar la biblioteca ReportLab. El contenido del informe debería tener este aspecto:
+
+Actualización procesada en <fecha de hoy>
+
+[línea en blanco]
+
+nombre: Manzana
+
+peso: 500 lbs
+
+[línea en blanco]
+
+nombre: Aguacate
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
