@@ -190,6 +190,7 @@ El archivo completo sería el siguiente:
 
 ```python
 #!/usr/bin/env python3
+
 import os
 import requests
 
@@ -198,7 +199,8 @@ keys = ["name", "weight", "description", "image_name"]
 index = 0
 path = "./supplier-data/descriptions/"
 img_path = "./supplier-data/images/"
-for file in os.listdir("./supplier-data/descriptions"):
+
+for file in os.listdir(path):
     with open(path + file) as f:
         for ln in f:
             line = ln.strip()
@@ -209,8 +211,21 @@ for file in os.listdir("./supplier-data/descriptions"):
                 index += 1
             else:
                 try:
-
-
+                    fruits[keys[index]] = line
+                    index += 1
+                except:
+                    fruits[keys[2]] = line
+    
+    index = 0
+    split_f = file.split(".")
+    name = split_f[0] + ".jpeg"
+    
+    for fle in os.listdir(img_path):
+        if fle == name:
+            fruits["image_name"] = name
+            response = requests.post("http://<External_IP>/fruits/", json=fruits)
+    
+    fruits.clear()
 
 ```
 
@@ -226,6 +241,8 @@ Ahora, ejecute el script run.py:
 ```
 ./run.py
 ```
+
+Para comprobar los resultados, vuelva a visitar la URL externa.
 
 
 # Genera un informe en PDF y envíalo por correo electrónico
