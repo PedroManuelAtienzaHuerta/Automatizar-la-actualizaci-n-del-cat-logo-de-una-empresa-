@@ -199,6 +199,16 @@ index = 0
 path = "./supplier-data/descriptions/"
 img_path = "./supplier-data/images/"
 for file in os.listdir("./supplier-data/descriptions"):
+    with open(path + file) as f:
+        for ln in f:
+            line = ln.strip()
+            if "lbs" in line:
+                nline = line.split()
+                wght = int(nline[0])
+                fruits["weight"] = wght
+                index += 1
+            else:
+                try:
 
 
 
