@@ -194,6 +194,8 @@ El archivo completo sería el siguiente:
 import os
 import requests
 
+# Crear un diccionario de frutas que contenga como claves: name, weight, description e image_name
+
 fruits = {}
 keys = ["name", "weight", "description", "image_name"]
 index = 0
@@ -252,6 +254,7 @@ Una vez subidos los archivos images y descriptions al servidor web de la fruter�
 Para generar informes PDF, puede utilizar la biblioteca **ReportLab.**
 
 El contenido del informe debería tener este aspecto:
+```
 
 Actualización procesada en <fecha de hoy>
 
@@ -264,6 +267,45 @@ peso: 500 lbs
 [línea en blanco]
 
 nombre: Aguacate
+```
+Ahora crearemos un script llamado **reports.py** para crear un informe pdf a los proveedores.
+
+Usando la librería Python reportlab, definiremos el método **generate_report** para construir los informes PDF.
+
+ El Script Python completo sería el siguiente:
+ ```python
+
+#!/usr/bin/env python3
+
+from reportlab.platypus import SimpleDocTemplate
+from reportlab.platypus import Paragraph, Spacer, Table, Image
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib import colors
+
+
+def generate_report(attachment, title, pharagraph):
+    styles = getSampleStyleSheet()
+    report = SimpleDocTemplate(attachment)
+    report.build([report_title, empty_line, report_info])
+    report_title = Paragraph(title, styles["h1"])
+    report_info = Paragraph(pharagraph, styles["BodyText"])
+    table_style = [('GRID', (0, 0), (-1, -1), 1, colors.black),
+                   ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+
+
+                   ('ALIGN', (0, 0), (-1, -1), 'CENTER')]
+
+
+    empty_line = Spacer(1, 20)
+    report.build([report_title, empty_line, report_info])
+```
+
+
+
+Una vez que haya terminado de editar el script reports.py, **guarde el archivo** escribiendo Ctrl+o, Tecla intro y Ctrl+x.
+
+Cree otro script llamado **report_email**
+
 
 
 
