@@ -378,6 +378,75 @@ if __name__ == "__main__":
     emails.send_email(message)
 ```
 
+Una vez completado el script report_email.py., **guarde el archivo** tecleando Ctrl+o, tecla Enter y Ctrl+x.
+
+# Enviar el informe por correo electrónico
+
+Una vez generado el PDF, es necesario enviar el correo electrónico utilizando los métodos **emails.generate_email() y emails.send_email().**
+
+Cree emails.py utilizando el **editor nano** con el siguiente comando:
+```
+nano ~/emails.py
+```
+
+Defina los métodos **generate_email y send_email** importando las librerías necesarias.
+
+El Script Python sería:
+
+```python
+#!/usr/bin/env python3
+
+import email.message
+import mimetypes
+import os.path
+import smtplib
+
+def generate_email(sender, recipient, subject, body, attachment_path):
+    """Crea un email con un adjunto."""
+    # Formato Básico de emai
+    message = email.message.EmailMessage()
+    message["From"] = sender
+    message["To"] = recipient
+    message["Subject"] = subject
+    message.set_content(body)
+    # Procesar el adjunto y añadirlo al email 
+    attachment_filename = os.path.basename(attachment_path)
+    mime_type, _ = mimetypes.guess_type(attachment_path)
+    mime_type, mime_subtype = mime_type.split('/', 1)
+    with open(attachment_path, 'rb') as ap:
+        message.add_attachment(ap.read(),
+                               maintype=mime_type,
+                               subtype=mime_subtype, filename=attachment_filename)
+    return message
+
+def generate_error_email(sender, recipient, subject, body):
+    """Crea un email sin adjunto."""
+    # Formato Básico de email 
+    message = email.message.EmailMessage()
+    message["From"] = sender
+    message["To"] = recipient
+    message["Subject"] = subject
+    message.set_content(body)
+    return message
+
+def send_email(message):
+    """Envía el mensaje al servidor de correo."""
+    mail_server = smtplib.SMTP('localhost')
+    mail_server.send_message(message)
+    mail_server.quit()
+```
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
