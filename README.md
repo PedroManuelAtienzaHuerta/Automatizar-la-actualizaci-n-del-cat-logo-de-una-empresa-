@@ -436,6 +436,95 @@ def send_email(message):
     mail_server.quit()
 ```
 
+Una vez que hayas terminado de editar el script emails.py, guarda el archivo tecleando Ctrl+o, tecla Enter y Ctrl+x.
+
+Ahora, **abra el script report_email.py** utilizando el editor nano:
+```
+nano ~/report_email.py
+```
+
+Una vez definidos los métodos **generate_email y send_email**, llame a los métodos bajo el método principal después de crear el informe PDF:
+```
+if __name__ == "__main__":
+```
+
+Utilice los siguientes detalles para pasar los parámetros a **emails.generate_email():**
+
+- **Sender**: "automation@example.com"
+
+- **Receiver**: "student@example.com"
+
+- **Subject**: Carga completada - Frutería Online
+
+- **Body**: Todas las frutas se han cargado correctamente en nuestro sitio web. Una lista detallada se adjunta a este correo electrónico.
+
+Adjunte la ruta del archivo processed.pdf que sería: "/tmp/processed.pdf"
+
+El script completo sería el siguiente:
+
+```python
+
+#!/usr/bin/env python3
+   
+import os
+import datetime
+import reports
+import emails
+
+
+dt = datetime.date.today().strftime("%B  %d, %Y")
+date = "Processed Update on " + dt
+names = []
+weights = []
+path = "./supplier-data/descriptions/"
+for file in os.listdir("./supplier-data/descriptions"):
+    with open(path + file) as f:
+        for ln in f:
+            line = ln.strip()
+            if len(line) <= 10 and len(line) > 0 and "lb"not in line:
+                fruit_name = "name: " + line
+                names.append(fruit_name)
+            if "lbs" in line:
+                fruit_weight = "weight: " + line
+                weights.append(fruit_weight)
+
+summary = ""
+ for name, weight in zip(names, weights):
+       summary += name + '<br />' + weight + '<br />' + '<br />'
+
+
+if __name__ == "__main__":
+    reports.generate_report("/tmp/processed.pdf", date, summary)
+    sender = "automation@example.com"
+    receiver = "student@example.com".format(os.environ.get('USER'))
+    subject = "Upload Completed - Online Fruit Store"
+    body = "All fruits are uploaded to our website successfully. A detailed list is attached to this email."
+    message = emails.generate_email(sender, receiver, subject, body, "/tmp/processed.pdf")
+
+    emails.send_email(message)
+```
+
+Una vez que haya terminado de editar el script report_email.py, guarde el archivo tecleando Ctrl+o, Tecla Intro y Ctrl+x.
+
+Conceda permisos de ejecución al script report_email.py:
+```
+sudo chmod +x ~/report_email.py
+```
+
+Ejecute el script report_email.py:
+```
+./report_email.py
+```
+
+Ahora, comprueba el correo web visitando [external-IP-address]/webmail. 
+
+Aquí, necesitarás iniciar sesión en **roundcube** usando tu nombre de usuario y la contraseña, seguido de hacer clic en Iniciar sesión.
+
+Ahora deberías poder ver tu bandeja de entrada, con un **correo no leído.**
+Abra el correo haciendo doble clic sobre él.
+Debería haber un **informe en formato PDF** adjunto al correo. Para ver el informe, ábralo.
+
+
 
 
 
