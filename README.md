@@ -545,23 +545,23 @@ nano ~/health_check.py
 Importa las **librerías Python necesarias** (ej. 
 shutil, psutil) para escribir este script.
 
-Completa el script para comprobar las estadísticas del sistema cada 60 segundos, y en caso de que se detecte algún problema de los mencionados anteriormente, se debe enviar un correo electrónico con el siguiente contenido:
+Completa el script para **comprobar las estadísticas del sistema cada 60 segundos**, y en caso de que se detecte algún problema de los mencionados anteriormente, se debe **enviar un correo electrónico** con el siguiente contenido:
 
 - From: automation@example.com
 
 - To: student@example.com
 
-- Asunto:
+- **Asunto:**
 
- * Error - El uso de la CPU es superior al 80%
+  1. Error - El **uso de la CPU** es superior al 80%
 
- - Error - El espacio disponible en disco es inferior al 20%
+  2. Error - El **espacio disponible en disco** es inferior al 20%
 
-  - Error - La memoria disponible es inferior a 100 MB
+  3. Error - La **memoria disponible** es inferior a 100 MB
 
-  - Error - localhost no puede resolverse en 127.0.0.1
+  4. Error - **localhost no puede resolverse** en 127.0.0.1
 
-- Cuerpo del mensaje: Por favor, compruebe su sistema y resuelva el problema lo antes posible.
+- **Cuerpo del mensaje:**       Por favor, compruebe su sistema y resuelva el problema lo antes posible.
 
 **Aquí no hay ningún archivo adjunto,** por lo que debe tener cuidado al definir el método **generate_email()** en el script **emails.py** o puede crear un método **generate_error_report()** independiente para gestionar el correo electrónico sin archivos adjuntos.
 
