@@ -563,7 +563,79 @@ Completa el script para **comprobar las estadísticas del sistema cada 60 segund
 
 - **Cuerpo del mensaje:**       Por favor, compruebe su sistema y resuelva el problema lo antes posible.
 
-**Aquí no hay ningún archivo adjunto,** por lo que debe tener cuidado al definir el método **generate_email()** en el script **emails.py** o puede crear un método **generate_error_report()** independiente para gestionar el correo electrónico sin archivos adjuntos.
+**Aquí no hay ningún archivo adjunto,** por lo que debe tener cuidado al definir el método **generate_email()** en el script **emails.py** o puede crear un método **generate_error_report()** independiente para gestionar el correo electrónico sin archivos adjuntos. 
+
+El script health_check.py sería el siguiente:
+```python
+
+#!/usr/bin/env python3 
+
+import os
+import shutil
+import psutil
+import socket
+import emails
+
+sender = "automation@example.com"
+receiver = "student@example.com".format(os.environ.get('USER'))
+body = "Por favor, comprueba tu sistema y resuelve los errores tan pronto como sea posible."
+
+# Comprueba el uso del disco y envía emails si el espacio disponible es < 20%
+du = shutil.disk_usage("/")
+du_prsnt = du.free/du.total * 100
+if du_prsnt < 20:
+   subject = "Error - El espacio disponible en el disco es menor del 20%"
+message = emails.generate_error_email(sender, receiver, subject, body)
+emails.send_email(message)
+
+# Comprueba el uso de la CPU y envía emails si el uso es mayor de >80%
+cpu_prsnt = psutil.cpu_percent(1)
+if cpu_prsnt > 80:
+   subject = "Error - El uso de la CPU es >80%"
+message = emails.generate_error_email(sender, receiver, subject, body)
+emails.send_email(message)
+
+# Comprueba la memoria disponible, si es < 100mb, envía un email 
+mem = psutil.virtual_memory()
+trs = 100 * 1024 * 1024  # 100MB
+if mem.available < trs:
+   subject = "Error - La memoria disponible es <100MB"
+message = emails.generate_error_email(sender, receiver, subject, body)
+emails.send_email(message)
+
+# Comprueba el nombre del servidor y si no puede ser resuelto a "127.0.0.1", envía un email 
+hostname = socket.gethostbyname('localhost')
+if hostname != '127.0.0.1':
+   subject = "Error - El servidor local no puede resolverse a "127.0.0.1"
+message = emails.generate_error_email(sender, receiver, subject, body)
+emails.send_email(message)
+```
+Una vez que haya completado el script health_check.py. **Guarde el archivo** escribiendo Ctrl+o, tecla Intro y Ctrl+x.
+
+Conceda permisos de ejecución al script health_check.py.
+```
+sudo chmod +x ~/health_check.py
+```
+Ejecuta el archivo.
+```
+./health_check.py
+```
+A continuación, ve a la **bandeja de entrada del correo web** y actualízala. 
+Sólo debería haber un correo electrónico si algo va mal, así que es de esperar que usted no vea un nuevo correo electrónico.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
