@@ -606,7 +606,7 @@ if mem.available < trs:
 # Comprueba el nombre del servidor y si no puede ser resuelto a "127.0.0.1", envía un email 
 hostname = socket.gethostbyname('localhost')
 if hostname != '127.0.0.1':
-    subject = "Error - El servidor local no puede resolverse a "127.0.0.1"
+    subject = 'Error - El servidor local no puede resolverse a "127.0.0.1"'
     message = emails.generate_error_email(sender, receiver, subject, body)
     emails.send_email(message)
 ```
