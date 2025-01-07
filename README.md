@@ -470,9 +470,9 @@ if __name__ == "__main__":
 
 Utilice los siguientes detalles para pasar los parámetros a **emails.generate_email():**
 
-- **Sender**: "automation@example.com"
+- **Sender**: "automation&#64;example.com"
 
-- **Receiver**: "student@example.com"
+- **Receiver**: "student&#64;example.com"
 
 - **Subject**: Carga completada - Frutería Online
 
@@ -572,9 +572,9 @@ shutil, psutil) para escribir este script.
 
 Completa el script para **comprobar las estadísticas del sistema cada 60 segundos**, y en caso de que se detecte algún problema de los mencionados anteriormente, se debe **enviar un correo electrónico** con el siguiente contenido:
 
-- From: automation@example.com
+- From: automation&#64;example.com
 
-- To: student@example.com
+- To: student&#64;example.com
 
 - **Asunto:**
 
@@ -672,7 +672,7 @@ Ahora **ejecuta el script** python health_check.py.
 La imagen muestra dos correos electrónicos: uno sobre un error y otro sobre una carga correcta. El mensaje de error tiene un tamaño de 831,8 KB.
 
 Abra el **correo electrónico con el asunto Error - El uso de CPU es superior al 80%** haciendo doble clic en él.
-La imagen muestra un correo electrónico de automation@example.com con el asunto:
+La imagen muestra un correo electrónico de automation&#64;example.com con el asunto:
 "Error - El uso de la CPU supera el 80%".
 El correo electrónico se envió hoy a las 00:24.
 
