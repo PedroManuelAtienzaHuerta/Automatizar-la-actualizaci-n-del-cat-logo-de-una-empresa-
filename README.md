@@ -27,17 +27,17 @@ Liste el contenido del directorio supplier-data utilizando el siguiente comando:
 ls ~/supplier/data
 ```
 
-Salida:
+**Salida:**
 ```
 images descriptions
 ```
 El subdirectorio **"images"** contiene imágenes de varias frutas, mientras que el subdirectorio **"descriptions"** tiene ficheros de texto que contienen la descripción de cada fruta. 
 
-Puede echar un vistazo a cualquiera de estos archivos de texto utilizando el comando cat:
+Puede echar un vistazo a cualquiera de estos archivos de texto utilizando el **comando cat:**
 ```
 cat ~/supplier-data/descriptions 
 ```
-Salida:
+**Salida:**
 ```
 Mango
 115 libs
@@ -72,7 +72,7 @@ El archivo sería el siguiente:
 
 from PIL import Image
 import os
-
+# Convertimos RGA en RGB y tiff en jpeg
 path = "./supplier-data/images/"
 for f in os.listdir("./supplier-data/images"):
       if f.endswith(".tiff"):
@@ -135,7 +135,7 @@ Conceda **permisos de ejecución** al script supplier_image_upload.py:
 sudo chmod +x ~/supplier_image_upload.py
 ```
 
-Ahora, ejecute el script supplier_image_upload.py:
+Ahora, **ejecute el script** supplier_image_upload.py:
 ```
 ./supplier_image_upload.py
 ```
@@ -239,7 +239,7 @@ Conceda **permisos de ejecución** al script run.py:
 sudo chmod +x ~/run.py
 ```
 
-Ahora, ejecute el script run.py:
+Ahora, **ejecute el script** run.py:
 ```
 ./run.py
 ```
@@ -253,7 +253,7 @@ Una vez subidos los archivos images y descriptions al servidor web de la fruter�
 
 Para generar informes PDF, puede utilizar la biblioteca **ReportLab.**
 
-El contenido del informe debería tener este aspecto:
+El **contenido del informe** debería tener este aspecto:
 ```
 
 Actualización procesada en <fecha de hoy>
@@ -282,7 +282,7 @@ from reportlab.platypus import Paragraph, Spacer, Table, Image
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib import colors
 
-
+# Crearemos el pdf de informe
 def generate_report(attachment, title, pharagraph):
     styles = getSampleStyleSheet()
     report = SimpleDocTemplate(attachment)
@@ -345,7 +345,7 @@ import datetime
 import reports
 import emails
 
-
+# Procesaremos los datos de frutas de los proveedores
 dt = datetime.date.today().strftime("%B  %d, %Y")
 date = "Processed Update on " + dt
 names = []
@@ -402,13 +402,15 @@ import os.path
 import smtplib
 
 def generate_email(sender, recipient, subject, body, attachment_path):
+
     """Crea un email con un adjunto."""
-    # Formato Básico de emai
+    # Formato Básico de email
     message = email.message.EmailMessage()
     message["From"] = sender
     message["To"] = recipient
     message["Subject"] = subject
     message.set_content(body)
+
     # Procesar el adjunto y añadirlo al email 
     attachment_filename = os.path.basename(attachment_path)
     mime_type, _ = mimetypes.guess_type(attachment_path)
@@ -420,6 +422,7 @@ def generate_email(sender, recipient, subject, body, attachment_path):
     return message
 
 def generate_error_email(sender, recipient, subject, body):
+
     """Crea un email sin adjunto."""
     # Formato Básico de email 
     message = email.message.EmailMessage()
@@ -430,6 +433,7 @@ def generate_error_email(sender, recipient, subject, body):
     return message
 
 def send_email(message):
+
     """Envía el mensaje al servidor de correo."""
     mail_server = smtplib.SMTP('localhost')
     mail_server.send_message(message)
@@ -492,13 +496,13 @@ summary = ""
  for name, weight in zip(names, weights):
        summary += name + '<br />' + weight + '<br />' + '<br />'
 
-
+# Modificamos los parámetros para incluirlos en emails.generate_email
 if __name__ == "__main__":
     reports.generate_report("/tmp/processed.pdf", date, summary)
     sender = "automation@example.com"
     receiver = "student@example.com".format(os.environ.get('USER'))
-    subject = "Upload Completed - Online Fruit Store"
-    body = "All fruits are uploaded to our website successfully. A detailed list is attached to this email."
+    subject = "Carga completada - Frutería Online"
+    body = "Todas las frutas se han cargado correctamente en nuestro sitio web. Una lista detallada se adjunta a este correo electrónico."
     message = emails.generate_email(sender, receiver, subject, body, "/tmp/processed.pdf")
 
     emails.send_email(message)
@@ -506,17 +510,18 @@ if __name__ == "__main__":
 
 Una vez que haya terminado de editar el script report_email.py, guarde el archivo tecleando Ctrl+o, Tecla Intro y Ctrl+x.
 
-Conceda permisos de ejecución al script report_email.py:
+Conceda **permisos de ejecución al script report_email.py:**
 ```
 sudo chmod +x ~/report_email.py
 ```
 
-Ejecute el script report_email.py:
+**Ejecute el script** report_email.py:
 ```
 ./report_email.py
 ```
 
-Ahora, comprueba el correo web visitando [external-IP-address]/webmail. 
+Ahora, **comprueba el correo web** visitando [external-IP-address]/webmail. 
+Reemplaza [external-IP-address] por la dirección de la web externa.
 
 Aquí, necesitarás iniciar sesión en **roundcube** usando tu nombre de usuario y la contraseña, seguido de hacer clic en Iniciar sesión.
 
@@ -525,6 +530,7 @@ Abra el correo haciendo doble clic sobre él.
 Debería haber un **informe en formato PDF** adjunto al correo. Para ver el informe, ábralo.
 
 # Chequeo de salud
+
  Por último, vamos a escribir un script Python llamado **health_check.py** que se ejecutará en segundo plano monitorizando algunas de las estadísticas de tu sistema: 
 - Uso de CPU
 - Espacio en disco,
@@ -612,16 +618,78 @@ if hostname != '127.0.0.1':
 ```
 Una vez que haya completado el script health_check.py. **Guarde el archivo** escribiendo Ctrl+o, tecla Intro y Ctrl+x.
 
-Conceda permisos de ejecución al script health_check.py.
+Conceda **permisos de ejecución** al script health_check.py.
 ```
 sudo chmod +x ~/health_check.py
 ```
-Ejecuta el archivo.
+**Ejecuta el archivo:**
 ```
 ./health_check.py
 ```
 A continuación, ve a la **bandeja de entrada del correo web** y actualízala. 
 Sólo debería haber un correo electrónico si algo va mal, así que es de esperar que usted no vea un nuevo correo electrónico.
+
+Para probar tu script, puedes instalar la **herramienta stress.**
+```
+sudo apt install stress
+```
+
+Luego, llama a la herramienta **usando un buen número de CPUs** para cargar completamente nuestros recursos de CPU:
+```
+stress --cpu 8 &
+```
+
+Para seguir adelante, pulsa Intro y **deja que la prueba de estrés se ejecute en segundo plano**, ya que maximizará la utilización de nuestra CPU.
+
+Ahora **ejecuta el script** python health_check.py.
+```
+./health_check.py
+```
+
+**Comprueba tu bandeja de entrada** por si hay algún correo nuevo.
+
+**Salida:**
+
+La imagen muestra dos correos electrónicos: uno sobre un error y otro sobre una carga correcta. El mensaje de error tiene un tamaño de 831,8 KB.
+
+Abra el **correo electrónico con el asunto Error - El uso de CPU es superior al 80%** haciendo doble clic en él.
+La imagen muestra un correo electrónico de automation@example.com con el asunto:
+"Error - El uso de la CPU supera el 80%".
+El correo electrónico se envió hoy a las 00:24.
+
+Para **listar todos los trabajos en ejecución**, utilice el siguiente comando:
+```
+jobs -l
+```
+
+**Salida:**
+```
+[1]+ 18120 Running                 stress --cpu 8 &
+You have mail in /var/mail/student
+```
+
+**Anote el ID de proceso** que está realizando la prueba de estrés de la CPU, es decir,stress --cpu 8 &, en su editor de pruebas local.
+
+A continuación, **finalice el proceso de prueba de estrés** utilizando el siguiente comando:
+```
+kill [process-id]
+```
+
+Reemplace [process-id] con el ID de proceso que anotó anteriormente.
+
+A continuación, **configure una tarea cron** que ejecute el script health_check.py cada 60 segundos y envíe el estado de salud al usuario correspondiente.
+
+Para configurar una tarea cron de usuario, utilice el siguiente comando:
+```
+crontab -e
+```
+
+**Salida:**
+
+La imagen muestra una ventana de editor de texto con el archivo crontab abierto. Usuario editando el archivo para programar tareas que serán ejecutadas por el servicio cron.
+
+Ahora, **establezca la ruta completa para el script health_check.py** a continuación de la línea final de la salida y guarde haciendo clic en Ctrl+o, tecla Enter, y Ctrl+x.
+
 
 
 
