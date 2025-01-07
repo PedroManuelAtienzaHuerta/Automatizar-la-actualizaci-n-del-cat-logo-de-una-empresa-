@@ -20,7 +20,7 @@ Por último, paralelamente al funcionamiento de la automatización, queremos **c
 <br><br>
 
 
-# Datos de los Proveedores 
+# Datos de los Proveedores de Frutas 
 
 Los proveedores nos envían un archivo con un directorio llamado **"supplier-data"**, que contiene subdirectorios llamados **"images"** y **"descriptions".**
 
@@ -48,7 +48,7 @@ Mango
 
 
 <br><br>
-# Trabajar con imágenes de proveedores:
+# Procesar las imágenes de los proveedores:
 
 En esta sección, escribiremos un script en Python llamado **changeImage.py** para procesar las imágenes de los proveedores. 
 
@@ -100,7 +100,7 @@ Ahora, ejecute el script changeImage.py:
 
 <br><br>
 
-# Cargando imágenes al servidor web
+# Subir las imágenes al servidor web
 
 Usted ha modificado las imágenes de frutas a través del script changeImage.py. 
 
@@ -131,8 +131,6 @@ for f in os.listdir("./supplier-data/images"):
         with open('./supplier-data/images/' + f, 'rb') as opened:
             r = requests.post(url, files={'file': opened})
 
-
-
 ```
 
 
@@ -153,7 +151,7 @@ Ahora, **ejecute el script** supplier_image_upload.py:
 
 
 <br><br>
-# Cargando las descripciones 
+# Añadir las descripciones de frutas 
 
 Para añadir imágenes de frutas y sus descripciones desde el proveedor en el servidor web del catálogo de frutas, **cree un nuevo script en Python que automáticamente POSTEARÁ** las imágenes de frutas y sus respectivas descripciones en formato JSON.
 
@@ -261,7 +259,7 @@ Para comprobar los resultados, vuelva a visitar la URL externa.
 
 <br><br>
 
-# Genera un informe en PDF y envíalo por correo electrónico
+# Crear un informe en PDF y enviarlo por email 
 
 Una vez subidos los archivos images y descriptions al servidor web de la frutería, tendrás que **generar un archivo PDF para enviárselo al proveedor**, indicando que los datos se han procesado correctamente. 
 
@@ -315,7 +313,6 @@ def generate_report(attachment, title, pharagraph):
     
     report.build([report_title, empty_line, report_info])
 ```
-
 
 
 Una vez que haya terminado de editar el script reports.py, **guarde el archivo** escribiendo Ctrl+o, Tecla intro y Ctrl+x.
@@ -391,10 +388,6 @@ if __name__ == "__main__":
     message = emails.generate_email(sender, receiver, subject, body, "/tmp/processed.pdf")
 
     emails.send_email(message)
-
-
-               
-
     
 ```
 
@@ -403,7 +396,7 @@ Una vez completado el script report_email.py., **guarde el archivo** tecleando C
 
 
 <br><br>
-# Enviar el informe por correo electrónico
+# Enviar el PDF del informe por correo electrónico
 
 Una vez generado el PDF, es necesario enviar el correo electrónico utilizando los métodos **emails.generate_email() y emails.send_email().**
 
@@ -477,9 +470,9 @@ if __name__ == "__main__":
 
 Utilice los siguientes detalles para pasar los parámetros a **emails.generate_email():**
 
-- **Sender**: "automation&#example.com"
+- **Sender**: "automation@example.com"
 
-- **Receiver**: "student&#example.com"
+- **Receiver**: "student@example.com"
 
 - **Subject**: Carga completada - Frutería Online
 
@@ -555,7 +548,7 @@ Debería haber un **informe en formato PDF** adjunto al correo. Para ver el info
 
 <br><br>
 
-# Chequeo de salud
+# Monitoreo del sistema 
 
  Por último, vamos a escribir un script Python llamado **health_check.py** que se ejecutará en segundo plano monitorizando algunas de las estadísticas de tu sistema: 
 - Uso de CPU
@@ -579,9 +572,9 @@ shutil, psutil) para escribir este script.
 
 Completa el script para **comprobar las estadísticas del sistema cada 60 segundos**, y en caso de que se detecte algún problema de los mencionados anteriormente, se debe **enviar un correo electrónico** con el siguiente contenido:
 
-- From: automation&#example.com
+- From: automation@example.com
 
-- To: student&#example.com
+- To: student@example.com
 
 - **Asunto:**
 
@@ -714,8 +707,10 @@ crontab -e
 
 La imagen muestra una ventana de editor de texto con el archivo crontab abierto. Usuario editando el archivo para programar tareas que serán ejecutadas por el servicio cron.
 
-Ahora, **establezca la ruta completa para el script health_check.py** a continuación de la línea final de la salida y guarde haciendo clic en Ctrl+o, tecla Enter, y Ctrl+x.
+Ahora, **establezca la ruta completa para el script health_check.py** a continuación de la línea final de la salida y guarde haciendo clic en Ctrl+o, tecla Enter, y Ctrl+x. 
+Así terminamos de configurar el servicio cron.
 
+**Hemos llegado al final del problema** planteado al principio de este proyecto con su resolución satisfactoria gracias a los scripts y servicios que hemos ido creando.
 
 
 
