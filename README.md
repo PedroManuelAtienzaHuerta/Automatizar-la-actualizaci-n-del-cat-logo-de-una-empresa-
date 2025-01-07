@@ -18,6 +18,8 @@ El **correo electrónico tiene adjunto un PDF** con el nombre de la fruta y su p
 
 Por último, paralelamente al funcionamiento de la automatización, queremos **comprobar la salud del sistema y enviar un correo electrónico si algo va mal.**
 
+
+
 # Datos de los Proveedores 
 
 Los proveedores nos envían un archivo con un directorio llamado **"supplier-data"**, que contiene subdirectorios llamados **"images"** y **"descriptions".**
@@ -42,6 +44,9 @@ cat ~/supplier-data/descriptions
 Mango
 115 libs
 ```
+
+
+
 
 # Trabajar con imágenes de proveedores:
 
@@ -92,6 +97,9 @@ Ahora, ejecute el script changeImage.py:
 ./changeImage.py
 ```
 
+
+
+
 # Cargando imágenes al servidor web
 
 Usted ha modificado las imágenes de frutas a través del script changeImage.py. 
@@ -141,6 +149,9 @@ Ahora, **ejecute el script** supplier_image_upload.py:
 ```
 
 **Visita la url externa** y deberías ver todas las imágenes subidas con éxito.
+
+
+
 
 # Cargando las descripciones 
 
@@ -245,6 +256,9 @@ Ahora, **ejecute el script** run.py:
 ```
 
 Para comprobar los resultados, vuelva a visitar la URL externa.
+
+
+
 
 
 # Genera un informe en PDF y envíalo por correo electrónico
@@ -380,6 +394,9 @@ if __name__ == "__main__":
 
 Una vez completado el script report_email.py., **guarde el archivo** tecleando Ctrl+o, tecla Enter y Ctrl+x.
 
+
+
+
 # Enviar el informe por correo electrónico
 
 Una vez generado el PDF, es necesario enviar el correo electrónico utilizando los métodos **emails.generate_email() y emails.send_email().**
@@ -454,9 +471,9 @@ if __name__ == "__main__":
 
 Utilice los siguientes detalles para pasar los parámetros a **emails.generate_email():**
 
-- **Sender**: "automation@example.com"
+- **Sender**: "automation&#example.com"
 
-- **Receiver**: "student@example.com"
+- **Receiver**: "student&#example.com"
 
 - **Subject**: Carga completada - Frutería Online
 
@@ -464,7 +481,7 @@ Utilice los siguientes detalles para pasar los parámetros a **emails.generate_e
 
 Adjunte la ruta del archivo processed.pdf que sería: "/tmp/processed.pdf"
 
-El script completo sería el siguiente:
+El **script completo** sería el siguiente:
 
 ```python
 
@@ -529,6 +546,9 @@ Ahora deberías poder ver tu bandeja de entrada, con un **correo no leído.**
 Abra el correo haciendo doble clic sobre él.
 Debería haber un **informe en formato PDF** adjunto al correo. Para ver el informe, ábralo.
 
+
+
+
 # Chequeo de salud
 
  Por último, vamos a escribir un script Python llamado **health_check.py** que se ejecutará en segundo plano monitorizando algunas de las estadísticas de tu sistema: 
@@ -553,9 +573,9 @@ shutil, psutil) para escribir este script.
 
 Completa el script para **comprobar las estadísticas del sistema cada 60 segundos**, y en caso de que se detecte algún problema de los mencionados anteriormente, se debe **enviar un correo electrónico** con el siguiente contenido:
 
-- From: automation@example.com
+- From: automation&#example.com
 
-- To: student@example.com
+- To: student&#example.com
 
 - **Asunto:**
 
@@ -571,7 +591,7 @@ Completa el script para **comprobar las estadísticas del sistema cada 60 segund
 
 **Aquí no hay ningún archivo adjunto,** por lo que debe tener cuidado al definir el método **generate_email()** en el script **emails.py** o puede crear un método **generate_error_report()** independiente para gestionar el correo electrónico sin archivos adjuntos. 
 
-El script health_check.py sería el siguiente:
+El script **health_check.py** sería el siguiente:
 ```python
 
 #!/usr/bin/env python3 
