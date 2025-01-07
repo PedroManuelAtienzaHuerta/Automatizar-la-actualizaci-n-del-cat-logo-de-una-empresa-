@@ -72,19 +72,19 @@ Cree y abra el archivo con el **editor nano.**
  ```
 El archivo sería el siguiente:
 ```python
-
 #!/usr/bin/env python3
 
 from PIL import Image
 import os
+
 # Convertimos RGA en RGB y tiff en jpeg
 path = "./supplier-data/images/"
 for f in os.listdir("./supplier-data/images"):
-      if f.endswith(".tiff"):
-           split_f = f.split(".")
-           name = split_f[0] + ".jpeg"
-           im = Image.open(path + f).convert("RGB")
-           im.resize((600, 400)).save("./supplier-data/images/" + name, "JPEG")
+    if f.endswith(".tiff"):
+        split_f = f.split(".")
+        name = split_f[0] + ".jpeg"
+        im = Image.open(path + f).convert("RGB")
+        im.resize((600, 400)).save("./supplier-data/images/" + name, "JPEG")
 ```
 Una vez que haya terminado de editar el script changeImage.py, **guarde el archivo pulsando Ctrl+o, tecla Intro y Ctrl+x.**
 
@@ -300,17 +300,19 @@ from reportlab.lib import colors
 def generate_report(attachment, title, pharagraph):
     styles = getSampleStyleSheet()
     report = SimpleDocTemplate(attachment)
-    report.build([report_title, empty_line, report_info])
+    
     report_title = Paragraph(title, styles["h1"])
     report_info = Paragraph(pharagraph, styles["BodyText"])
-    table_style = [('GRID', (0, 0), (-1, -1), 1, colors.black),
-                   ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-
-
-                   ('ALIGN', (0, 0), (-1, -1), 'CENTER')]
-
-
     empty_line = Spacer(1, 20)
+    
+    table_style = [
+        ('GRID', (0, 0), (-1, -1), 1, colors.black),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER')
+    ]
+    
+    
+    
     report.build([report_title, empty_line, report_info])
 ```
 
@@ -350,8 +352,7 @@ Necesitará pasar los siguientes argumentos al método **reports.generate_report
 - Ruta del fichero PDF a generar como argumento **attachment(use '/tmp/processed.pdf')**
 
  El script Python sería:
- ```python 
-
+ ```python
 #!/usr/bin/env python3
 
 import os
@@ -369,7 +370,7 @@ for file in os.listdir("./supplier-data/descriptions"):
     with open(path + file) as f:
         for ln in f:
             line = ln.strip()
-            if len(line) <= 10 and len(line) > 0 and "lb"not in line:
+            if len(line) <= 10 and len(line) > 0 and "lb" not in line:
                 fruit_name = "name: " + line
                 names.append(fruit_name)
             if "lbs" in line:
@@ -377,8 +378,8 @@ for file in os.listdir("./supplier-data/descriptions"):
                 weights.append(fruit_weight)
 
 summary = ""
- for name, weight in zip(names, weights):
-       summary += name + '<br />' + weight + '<br />' + '<br />'
+for name, weight in zip(names, weights):
+    summary += name + '<br />' + weight + '<br />' + '<br />'
 
 
 if __name__ == "__main__":
@@ -390,6 +391,11 @@ if __name__ == "__main__":
     message = emails.generate_email(sender, receiver, subject, body, "/tmp/processed.pdf")
 
     emails.send_email(message)
+
+
+               
+
+    
 ```
 
 Una vez completado el script report_email.py., **guarde el archivo** tecleando Ctrl+o, tecla Enter y Ctrl+x.
@@ -510,8 +516,8 @@ for file in os.listdir("./supplier-data/descriptions"):
                 weights.append(fruit_weight)
 
 summary = ""
- for name, weight in zip(names, weights):
-       summary += name + '<br />' + weight + '<br />' + '<br />'
+for name, weight in zip(names, weights):
+    summary += name + '<br />' + weight + '<br />' + '<br />'
 
 # Modificamos los parámetros para incluirlos en emails.generate_email
 if __name__ == "__main__":
