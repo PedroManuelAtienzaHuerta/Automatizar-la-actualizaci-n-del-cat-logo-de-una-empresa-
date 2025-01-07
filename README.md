@@ -17,7 +17,7 @@ Una vez completada la tarea, se notifica al proveedor con un **correo electróni
 El **correo electrónico tiene adjunto un PDF** con el nombre de la fruta y su peso total (en lbs).
 
 Por último, paralelamente al funcionamiento de la automatización, queremos **comprobar la salud del sistema y enviar un correo electrónico si algo va mal.**
-
+<br><br>
 
 
 # Datos de los Proveedores 
@@ -47,7 +47,7 @@ Mango
 
 
 
-
+<br><br>
 # Trabajar con imágenes de proveedores:
 
 En esta sección, escribiremos un script en Python llamado **changeImage.py** para procesar las imágenes de los proveedores. 
@@ -98,7 +98,7 @@ Ahora, ejecute el script changeImage.py:
 ```
 
 
-
+<br><br>
 
 # Cargando imágenes al servidor web
 
@@ -115,7 +115,7 @@ Utilice el **editor nano** para crear un archivo llamado supplier_image_upload.p
 nano ~/supplier_image_upload.py
 ```
 
-El script completo sería el siguiente:
+El **script completo** sería el siguiente:
 
 ```python
 
@@ -152,7 +152,7 @@ Ahora, **ejecute el script** supplier_image_upload.py:
 
 
 
-
+<br><br>
 # Cargando las descripciones 
 
 Para añadir imágenes de frutas y sus descripciones desde el proveedor en el servidor web del catálogo de frutas, **cree un nuevo script en Python que automáticamente POSTEARÁ** las imágenes de frutas y sus respectivas descripciones en formato JSON.
@@ -259,7 +259,7 @@ Para comprobar los resultados, vuelva a visitar la URL externa.
 
 
 
-
+<br><br>
 
 # Genera un informe en PDF y envíalo por correo electrónico
 
@@ -396,7 +396,7 @@ Una vez completado el script report_email.py., **guarde el archivo** tecleando C
 
 
 
-
+<br><br>
 # Enviar el informe por correo electrónico
 
 Una vez generado el PDF, es necesario enviar el correo electrónico utilizando los métodos **emails.generate_email() y emails.send_email().**
@@ -547,7 +547,7 @@ Abra el correo haciendo doble clic sobre él.
 Debería haber un **informe en formato PDF** adjunto al correo. Para ver el informe, ábralo.
 
 
-
+<br><br>
 
 # Chequeo de salud
 
